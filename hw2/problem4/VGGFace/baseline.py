@@ -73,14 +73,14 @@ if __name__ == "__main__":
     fig = plt.figure()
     ax = fig.add_subplot(1, 1, 1)
     ax.set_title('TSNE for AlexNet')
-
+    '''
     reduced_coor = TSNE(n_components=2).fit_transform(X=train_feature, y=train_label)
     for i, identity in enumerate(train_label):
         if identity < 10:
             ax.scatter(x=reduced_coor[i, 0], y=reduced_coor[i, 1], c=color[identity])
             ax.axes.get_xaxis().set_visible(False)
             ax.axes.get_yaxis().set_visible(False)
-
+    '''
     reduced_coor = TSNE(n_components=2).fit_transform(X=valid_feature, y=valid_label)
     for i, identity in enumerate(valid_label):
         if identity < 10:
