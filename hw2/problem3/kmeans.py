@@ -44,21 +44,22 @@ class KMeans_Classifier():
         self.centeroid = new_centeroid
         return ret
 
-    def plot(self, num_iter):
+    def plot(self, output_name):
         mark = ['o', '2', '^', '8', 'v', '1', 'p', 'x', 's', '3']
-        color = ['b', 'c', 'g', 'k', 'm', 'r', 'y']
+        color = ['xkcd:purple', 'xkcd:green', 'xkcd:blue', 'xkcd:pink', 'xkcd:brown',\
+                 'xkcd:sky blue', 'xkcd:teal', 'xkcd:orange', 'xkcd:yellow', 'xkcd:grey']
         fig = plt.figure()
         ax = fig.add_subplot(1, 1, 1)
-        ax.set_title('iteration {:0>2d}'.format(num_iter))
+        ax.set_title('results of kmeans')
         for index, objects in enumerate(self.group):
             ax.scatter(x=self.eigen_data[objects][:, 0],
                        y=self.eigen_data[objects][:, 1],
-                       c=[color[index%7] for _ in objects],
+                       c=[color[index%10] for _ in objects],
                        marker=mark[index%10],
                        s=[5 for _ in objects], alpha=0.5)
             ax.scatter(x=self.centeroid[index][0], y=self.centeroid[index][1],
-                       c=color[index%7], marker=mark[index%10])
-        plt.savefig(sys.argv[2]+'/{:0>2d}_iteration.jpg'.format(num_iter))
+                       c=color[index%10], marker=mark[index%10])
+        plt.savefig(output_name)
         plt.close()
 
     def fit(self):
@@ -66,7 +67,6 @@ class KMeans_Classifier():
             self.cluster()
             change = self.re_center()
             print('The {:0>4d} iteration, centeroid moves: {:.3f}'.format(iter, change))
-            self.plot(iter+1)
             if change < 10e-6:
                 break
         print('{}'.format('='*20))
@@ -103,6 +103,7 @@ def main():
     mean, vec = PCA(data[train_id].reshape(len(train_id), -1))
     clf = KMeans_Classifier(data[train_id], vec[:10], k=10)
     clf.fit()
+    clf.plot(sys.argv[2])
 
 if __name__ == '__main__':
     main()
