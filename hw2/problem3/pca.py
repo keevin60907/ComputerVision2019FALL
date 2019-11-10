@@ -7,11 +7,11 @@ from sklearn.manifold import TSNE
 
 def read_data(path):
     data, label = [], []
-    for file in sorted(os.listdir(path)):
-        if file[-4:] == '.png':
-            img = cv2.imread(os.path.join(path, file), cv2.IMREAD_GRAYSCALE)
+    for i in range(1, 41):
+        for j in range(1, 11):
+            img = cv2.imread(os.path.join(path, '{}_{}.png'.format(i, j)), cv2.IMREAD_GRAYSCALE)
             data.append(img)
-            label.append(int(file.split('_')[0]))
+            label.append(i)
     return np.array(data), np.array(label)
 
 def pca(data):
