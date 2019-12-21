@@ -15,8 +15,8 @@ def census_cost(mat_1, mat_2):
     The function is used to calculate the census cost with the type np.array((k, k), dtype=boolean)
 
     Arg(s):
-        mat_1(np.array) : BGR window with shape (k, k , 3)
-        mat_2(np.array) : BGR window with shape (k, k , 3)
+        mat_1(np.array) : BGR window with shape (k, k, 3)
+        mat_2(np.array) : BGR window with shape (k, k, 3)
 
     Return(s):
         cost(int)       : XOR result of the two windows
@@ -57,7 +57,7 @@ def build_cost_volume(img_left, img_right, max_disp):
                 # slide the window for each pixel
                 window_y = np.arange(coor_y, coor_y+2*rad+1)
                 window_x = np.arange(coor_x, coor_x+2*rad+1)
-                # make sure for the boarders
+                # make sure for the borders
                 if coor_x-disp < 0:
                     disparity_left[coor_y, coor_x, disp] = disparity_left[coor_y, coor_x, disp-1]
                 else:
@@ -119,12 +119,12 @@ def hole_filling(disparity, holes):
             # if we find the valid points, stop the loop
             if left_point != 0 and right_point != 0:
                 break
-            # hold the boarders while searching the right side
+            # hold the borders while searching the right side
             if hole_x + pixel >= width:
                 pass
             elif (hole_y, hole_x + pixel) not in holes:
                 right_point = pixel
-            # hold the boarders while searching the left side
+            # hold the borders while searching the left side
             if hole_x - pixel < 0:
                 pass
             elif (hole_y, hole_x - pixel) not in holes:
